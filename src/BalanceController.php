@@ -13,6 +13,7 @@ use Withdraw;
 use Referral;
 use App\Libraries\DepositProfit\DepositProfit;
 use Carbon\Carbon;
+use Balance;
 class BalanceController extends Controller
 {
     /**
@@ -43,8 +44,8 @@ class BalanceController extends Controller
         
         
 
-        // $purcharse = DepositService::get_deposit_for_chart($startOfMonth, $endOfMonth);
-        $purcharse = [];
+        $purcharse = Balance::get_purcharse_for_chart($startOfMonth, $endOfMonth);
+        
         $withdraw = Withdraw::get_withdraw_for_chart($startOfMonth, $endOfMonth);
 
         $data_for_chart = create_calendar_zeros_chart($startOfMonth, $endOfMonth);
@@ -60,6 +61,8 @@ class BalanceController extends Controller
                 if($withdraw[$key] > $max_value_chart) $max_value_chart = $withdraw[$key];
             }
         }
+        // dd($data_for_chart);
+
         $payment_system = PaymentSystem::getAll('asc');
         
         $today = get_group_by_payment_system(Carbon::today(), Carbon::today());

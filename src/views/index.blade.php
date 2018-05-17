@@ -142,9 +142,9 @@
                             <tbody>
                                 @foreach($payment_system as $row)
                                     <tr>
-                                        <td>{{$row->payment_systems_in}}</td>
+                                        <td>{{$row->id}}</td>
                                         <td>{{$row->title}}</td>
-                                        <td><a data-id="{{$row->payment_systems_in}}" class="loaded_balance" href="javascript:void(0)">Показать</a> {{$row->currency}}</td>
+                                        <td><a data-id="{{$row->id}}" class="loaded_balance" href="javascript:void(0)">Показать</a> {{$row->currency}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
