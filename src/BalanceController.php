@@ -23,11 +23,12 @@ class BalanceController extends Controller
     public function index(Request $request)
     {
         // $total_deposits = DepositService::total_amount();
-        $total_deposits = 0;
-        $total_withdraw = Withdraw::total_withdraw();
-        $total_referral = Referral::sum_total_refereals();
+        $total_deposits = Balance::get_total_purchase();
+        $total_withdraw = number(Withdraw::total_withdraw());
+        // $total_referral = Referral::sum_total_refereals();
+        $total_referral = '-';
         // $total_accurrals = $DepositProfit->sum_total_accurals();
-        $total_accurrals = 0;
+        $total_accurrals = '-';
 
         $from_date = ($request->input('from'))?$request->input('from'):null;
         $to_date = ($request->input('to'))?$request->input('to'):null;
@@ -69,7 +70,7 @@ class BalanceController extends Controller
         $week = get_group_by_payment_system(Carbon::today()->subDays(7), Carbon::today());
         $month = get_group_by_payment_system(Carbon::today()->subDays(31), Carbon::today());
         $total = get_group_by_payment_system(false, false);
-                
+        
         $purcharse = [];
         foreach($payment_system as $row){
             $purcharse[] = [
@@ -84,7 +85,6 @@ class BalanceController extends Controller
                 ]
             ];
         }        
-
 
         $withdraw = [];
         foreach($payment_system as $row){
