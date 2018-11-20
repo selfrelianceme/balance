@@ -1,7 +1,7 @@
 {
   "name": "selfreliance/balance",
   "type": "library",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "balance for laravel",
   "keywords": ["laravel"],
   "homepage": "https://github.com/selfrelianceme/balance",

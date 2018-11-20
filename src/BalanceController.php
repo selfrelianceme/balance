@@ -64,7 +64,7 @@ class BalanceController extends Controller
         }
         // dd($data_for_chart);
 
-        $payment_system = PaymentSystem::getAll('asc');
+        $payment_system = PaymentSystem::getAll('asc')->where('is_real_payment_system', 1)->values()->all();
         
         $today = get_group_by_payment_system(Carbon::today(), Carbon::today());
         $week = get_group_by_payment_system(Carbon::today()->subDays(7), Carbon::today());
