@@ -137,20 +137,25 @@ class BalanceController extends Controller
             if(isset($class)){
                 try {
                     $Currency_Rate = Currency_Rate::orderBy('id', 'desc')->first();
-                    $res = $class->balance($payment->currency);
+                    if($temp == '\Selfreliance\PayKassa\PayKassa'){
+                        $res = $class->balance($payment->currency, $payment->title);    
+                    }else{
+                        $res = $class->balance($payment->currency);    
+                    }
+                    
                     $responce = $res." ".$payment->currency;
-                    if($payment->currency == "BTC"){
-                        $responce .= " ~ ".$res*$Currency_Rate->btc_usd." USD";
-                    }
-                    if($payment->currency == "ETH"){
-                        $responce .= " ~ ".$res*$Currency_Rate->eth_usd." USD";
-                    }
-                    if($payment->currency == "DASH"){
-                        $responce .= " ~ ".$res*$Currency_Rate->dsh_usd." USD";
-                    }
-                    if($payment->currency == "LTC"){
-                        $responce .= " ~ ".$res*$Currency_Rate->ltc_usd." USD";
-                    }
+                    // if($payment->currency == "BTC"){
+                    //     $responce .= " ~ ".$res*$Currency_Rate->btc_usd." USD";
+                    // }
+                    // if($payment->currency == "ETH"){
+                    //     $responce .= " ~ ".$res*$Currency_Rate->eth_usd." USD";
+                    // }
+                    // if($payment->currency == "DASH"){
+                    //     $responce .= " ~ ".$res*$Currency_Rate->dsh_usd." USD";
+                    // }
+                    // if($payment->currency == "LTC"){
+                    //     $responce .= " ~ ".$res*$Currency_Rate->ltc_usd." USD";
+                    // }
                     echo $responce;
                 }catch(\Exception $e){
                     dd($e);
