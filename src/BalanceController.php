@@ -30,6 +30,11 @@ class BalanceController extends Controller
         // $total_accurrals = $DepositProfit->sum_total_accurals();
         $total_accurrals = '-';
 
+        $expenses = env('EXPENSES', 0);
+
+        $total_profit_system = number($total_deposits-$total_withdraw-$expenses,2);
+        
+
         $from_date = ($request->input('from'))?$request->input('from'):null;
         $to_date = ($request->input('to'))?$request->input('to'):null;
 
@@ -116,7 +121,7 @@ class BalanceController extends Controller
         // }
 
         return view('balance::index')->with(compact(
-        	'payment_system', 'total_deposits', 'total_withdraw', 'total_referral', 'total_accurrals', 'data_for_chart', 'max_value_chart', 'startOfMonth', 'endOfMonth', 'purcharse', 'withdraw'
+        	'payment_system', 'total_deposits', 'total_withdraw', 'total_referral', 'total_accurrals', 'data_for_chart', 'max_value_chart', 'startOfMonth', 'endOfMonth', 'purcharse', 'withdraw', 'total_profit_system', 'expenses'
         ));
     }
 

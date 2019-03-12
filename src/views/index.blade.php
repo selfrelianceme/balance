@@ -113,11 +113,11 @@
                             <h1 class="m-b-0 font-light">${{$total_withdraw}}</h1>
                             <h6 class="text-muted">Всего вывода</h6></div>
                         <div class="col-lg-3 col-md-6 m-b-30 m-t-20 text-center">
-                            <h1 class="m-b-0 font-light">${{$total_referral}}</h1>
-                            <h6 class="text-muted">Реферальных</h6></div>
+                            <h1 class="m-b-0 font-light">${{$expenses}}</h1>
+                            <h6 class="text-muted">Расходы</h6></div>
                         <div class="col-lg-3 col-md-6 m-b-30 m-t-20 text-center">
-                            <h1 class="m-b-0 font-light">${{$total_accurrals}}</h1>
-                            <h6 class="text-muted">Начислений</h6></div>
+                            <h1 class="m-b-0 font-light">${{$total_profit_system}}</h1>
+                            <h6 class="text-muted">Заработок</h6></div>
                     </div>
                 </div>
             </div>
