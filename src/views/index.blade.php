@@ -122,6 +122,35 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Изменить расходы</h4>
+                    <form class="form" method="POST" action="{{route('AdminBalanceSaveExpenses')}}">
+                        
+                        <div class="form-group row {{ $errors->has('EXPENSES') ? ' error' : '' }}">
+                            <label for="EXPENSES" class="col-2 col-form-label">Сумма в USD</label>
+                            <div class="col-10">
+                                <input type="text" name="EXPENSES" value="{{env('EXPENSES')}}" class="form-control" id="EXPENSES"/>                           
+                                @if ($errors->has('EXPENSES'))
+                                    <div class="help-block"><ul role="alert"><li>{{ $errors->first('EXPENSES') }}</li></ul></div>
+                                @endif   
+                            </div>
+                            
+                        </div>
+
+                        <div class="form-group m-b-0">
+                            <div class="offset-sm-2 col-sm-9">
+                                <button type="submit" class="btn btn-info waves-effect waves-light m-t-10">Сохранить расходы</button>
+                            </div>
+                        </div>
+                        {{ csrf_field() }}
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="row">
         <!-- column -->

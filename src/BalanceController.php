@@ -171,4 +171,34 @@ class BalanceController extends Controller
         }
         
     }
+
+
+    public function save_expenses(Request $request){
+        $this->validate($request, [
+            'EXPENSES'     => 'required|numeric',
+        ]);
+        $path = $this->envPath();
+
+        file_put_contents($path, str_replace(
+            'EXPENSES='.env('EXPENSES'),
+            'EXPENSES='.$request->input('EXPENSES'), file_get_contents($path)
+        ));
+
+        flash()->success('Новые условия сохранены');
+        return redirect()->back();
+    }
+
+
+    /**
+     * Get the .env file path.
+     *
+     * @return string
+     */
+    protected function envPath()
+    {
+        if (method_exists(app(), 'environmentFilePath')) {
+            return app()->environmentFilePath();
+        }
+        return app()->basePath('.env');
+    }
 }
