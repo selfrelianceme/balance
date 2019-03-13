@@ -14,6 +14,7 @@ use Referral;
 use App\Libraries\DepositProfit\DepositProfit;
 use Carbon\Carbon;
 use Balance;
+use ConvertingCourses;
 class BalanceController extends Controller
 {
     /**
@@ -53,6 +54,8 @@ class BalanceController extends Controller
         $purcharse = Balance::get_purcharse_for_chart($startOfMonth, $endOfMonth);
         
         $withdraw = Withdraw::get_withdraw_for_chart($startOfMonth, $endOfMonth);
+
+        $pending = Withdraw::pendings();
 
         $data_for_chart = create_calendar_zeros_chart($startOfMonth, $endOfMonth);
         $max_value_chart = 0;
@@ -104,8 +107,20 @@ class BalanceController extends Controller
                     'total' => Withdraw::get_by_payment_systems_ids(false, false, explode(',',$row->id))
                 ]
             ];
-        }        
+        }
+        $pending_withdraw = [];
+        $total_usd_withdraw = 0;
+        foreach($payment_system as $row){
+            $select = $pending->where('payment_system', $row->id)->first();
+            $amount = ($select) ? $select->aggregate : 0;
+            $total_usd_withdraw += ConvertingCourses::convert_amount($amount, $row->currency, 'USD');
+            $pending_withdraw[] = [
+                'payment_system' => $row,
+                'amount' => $amount,
+            ];
 
+        }
+        // dd($pending_withdraw);
         // foreach($payment_system as $row){
         //     $currency = PaymentSystem::get_origin_currency($row->title);
         //     $withdraw[] = [
@@ -121,7 +136,7 @@ class BalanceController extends Controller
         // }
 
         return view('balance::index')->with(compact(
-        	'payment_system', 'total_deposits', 'total_withdraw', 'total_referral', 'total_accurrals', 'data_for_chart', 'max_value_chart', 'startOfMonth', 'endOfMonth', 'purcharse', 'withdraw', 'total_profit_system', 'expenses'
+        	'payment_system', 'total_deposits', 'total_withdraw', 'total_referral', 'total_accurrals', 'data_for_chart', 'max_value_chart', 'startOfMonth', 'endOfMonth', 'purcharse', 'withdraw', 'total_profit_system', 'expenses', 'pending_withdraw', 'total_usd_withdraw'
         ));
     }
 

@@ -123,7 +123,7 @@
             </div>
         </div>
 
-        <div class="col-12">
+        <div class="col-lg-6 col-12">
             <div class="card">
                 <div class="card-block">
                     <h4 class="card-title">Изменить расходы</h4>
@@ -147,6 +147,19 @@
                         </div>
                         {{ csrf_field() }}
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-12">
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Вывод со статусом ожидание(всего: {{$total_usd_withdraw}} USD)</h4>
+                    <div class="row">
+                        @foreach($pending_withdraw as $row)
+                            <div class="col-6">{{ $row['payment_system']->title }}: {{$row['amount']}} {{$row['payment_system']->currency}}</div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
